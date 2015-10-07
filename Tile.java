@@ -21,28 +21,18 @@ public class Tile {
      * check if Tile isFree
      * */
 
-    public void setIsWalkable(boolean isWalkable) {
-        this.isWalkable = isWalkable;
-    }
+    public void setIsWalkable(boolean isWalkable) { this.isWalkable = isWalkable; }
 
-    public void setHasObject(boolean hasObject) {
-        this.hasObject = hasObject;
-    }
+    public void setHasObject(boolean hasObject) { this.hasObject = hasObject; }
 
-    public boolean isWalkable() {
-        return isWalkable;
-    }
+    public boolean isWalkable() { return isWalkable; }
 
-    public boolean hasObject() {
-        return hasObject;
-    }
+    public boolean hasObject() { return hasObject; }
+
+    public boolean isFree() { return (!hasObject && isWalkable); }
 
     public void freeTile() {
         isWalkable = true;
         hasObject = false;
-    }
-
-    public boolean isFree() {
-        return (!hasObject && isWalkable);
     }
 }

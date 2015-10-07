@@ -26,13 +26,9 @@ public class Robot {
      * Can set current coordinate into prevLocation collection
      * */
 
-    public int getX_coordinate() {
-        return x_coordinate;
-    }
+    public int getX_coordinate() { return x_coordinate; }
 
-    public int getY_coordinate() {
-        return y_coordinate;
-    }
+    public int getY_coordinate() { return y_coordinate; }
 
     public void setPrevLocation() {
         Point newLocation = new Point(x_coordinate, y_coordinate);

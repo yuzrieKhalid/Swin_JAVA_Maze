@@ -19,13 +19,14 @@ public class Maze {
 
     // good and bad bots
     private static ArrayList<Robot> badBots = new ArrayList<Robot>();
-    private Robot goodBot;
+    private static Robot goodBot;
 
     // from file declaration
     private static int mapWidth, mapHeight;
     private static int start_x, start_y, goal_x, goal_y;
     private static int numBadBot, numObstacles;
     private static String locationBadBots, locationObstacles;
+    private static Tile[][] map;
 
     Maze () {}
 
@@ -34,6 +35,7 @@ public class Maze {
      * can tokenize required locations
      * has main class
      * instantiates Robot, Tile, Maze
+     * has goodBot, badBot, Empty Lot, Obstacle, Home
      * note: map is a 2D array of Tiles
      * */
 
@@ -60,28 +62,45 @@ public class Maze {
             // as in Java JDK 8, no need for input.close()
         } catch (IOException e) { e.printStackTrace(); }
 
+        // init map
+        map = new Tile[mapHeight][mapWidth];
+        for (int row = 0; row < mapHeight; row++) {
+            for (int col = 0; col < mapWidth; col++) {
+                map[row][col] = new Tile();
+            }
+        }
+
+        // init player location
+        goodBot = new Robot(start_x, start_y);
+
+        // tokenize and initialize string containing ','
         tokenization();
     }
 
     public static void tokenization() {
         // tokenize BadBots
         StringTokenizer badBots_token = new StringTokenizer(locationBadBots, ",");
-        for(Robot badBot : badBots) {
+        for(int i=0; i < numBadBot; i++) {
             int pointX = Integer.parseInt(badBots_token.nextToken());
             int pointY = Integer.parseInt(badBots_token.nextToken());
-            badBot = new Robot(pointX, pointY);
+            Robot badBot = new Robot(pointX, pointY);
             badBots.add(badBot);
+        }
+
+        // tokenize Obstacles
+        StringTokenizer obstacles_token = new StringTokenizer(locationObstacles, ",");
+        for (int i=0; i < numObstacles; i++) {
+            int pointX = Integer.parseInt(obstacles_token.nextToken());
+            int pointY = Integer.parseInt(obstacles_token.nextToken());
+            map[pointX][pointY].setIsWalkable(false);
         }
     }
     /** Main class here **/
     public static void main(String[] args) throws IOException {
         Robot RobotTest = new Robot(2,1);
 
-        // Read file operation
-
         readfile();
 
-        System.out.println();
         System.out.println("-------------TEST------------------");
 
         System.out.println("Hello I am RobotTest");
