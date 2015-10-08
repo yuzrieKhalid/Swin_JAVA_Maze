@@ -14,6 +14,15 @@ import java.util.StringTokenizer;
  */
 public class Maze {
 
+    /** Maze Operations and Checks
+     * can read map file (.txt)
+     * can tokenize required locations
+     * has main class
+     * instantiates Robot, Tile, Maze
+     * has goodBot, badBot, Empty Lot, Obstacle, Home
+     * note: map is a 2D array of Tiles
+     * */
+
     // file path (starts from src)
     private static String filePath = "src/yuzrie/javamaze/mazemap.txt";
 
@@ -29,16 +38,14 @@ public class Maze {
     private static Tile[][] map;
     private static Tile home, obstacles;
 
-    Maze () {}
+    Maze () {
+        readfile();
 
-    /** Maze Operations and Checks
-     * can read map file (.txt)
-     * can tokenize required locations
-     * has main class
-     * instantiates Robot, Tile, Maze
-     * has goodBot, badBot, Empty Lot, Obstacle, Home
-     * note: map is a 2D array of Tiles
-     * */
+        System.out.println("Maze constructor working");
+        System.out.println("Test coordinate: " + map[3][2].getTileName());
+        System.out.println("Test coordinate: " + map[0][19].getTileName());
+        System.out.println("Test coordinate: " + map[0][0].getTileName());
+    }
 
     // This file reading technique is very static
     public static void readfile() {
@@ -63,19 +70,17 @@ public class Maze {
             // as in Java JDK 8, no need for input.close()
         } catch (IOException e) { e.printStackTrace(); }
 
-        // tokenize and initialize string containing ','
-        initmap();
+        // initialize map elements
+        initMap();
     }
 
-    public static void initmap() {
-
-        // init map
+    public static void initMap() {
+        // initialize map
         map = new Tile[mapHeight][mapWidth];
         for (int row=0; row < mapHeight; row++) {
             for (int col=0; col < mapWidth; col++) {
                 // System.out.println(row + " " + col);
                 map[row][col] = new Tile();
-
                 /** The Location Coordinate
                  * take note that instead of map(x,y), we do map(y,x)
                  * because we need to go through the row first then col
@@ -83,11 +88,11 @@ public class Maze {
             }
         }
 
-        // init goal / home
+        // initialize goal / home
         home = map[goal_y][goal_x];
         home.setTileName("Home");
 
-        // init player location
+        // initialize player location
         goodBot = new Robot(start_x, start_y);
 
         // tokenize BadBots
@@ -114,23 +119,18 @@ public class Maze {
         }
     }
 
+    // Accessor functions
+
+    public static Robot getGoodBot() { return goodBot; }
+
+    public static ArrayList<Robot> getBadBots() { return badBots; }
+
+    public static void setGoodBot(Robot goodBot) { Maze.goodBot = goodBot; }
+
+    public static void setBadBots(ArrayList<Robot> badBots) { Maze.badBots = badBots; }
+
     /** Main class here **/
-    public static void main(String[] args) throws IOException {
-        Robot RobotTest = new Robot(2,1);
-
-        readfile();
-
-        System.out.println("-------------TEST------------------");
-
-        System.out.println("Tile: " + map[0][19].getTileName());
-        System.out.println("Tile: " + map[3][2].getTileName());
-        System.out.println("Tile: " + map[0][0].getTileName());
-
-        System.out.println("Hello I am RobotTest");
-        System.out.println("My x coordinate is " + RobotTest.getX_coordinate());
-        System.out.println("My y coordinate is " + RobotTest.getY_coordinate());
-
-        System.out.println("-------TEST--------END-------------");
-
+    public static void main(String[] args) {
+        Maze maze = new Maze();
     }
 }
