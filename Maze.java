@@ -27,6 +27,7 @@ public class Maze {
     private static int numBadBot, numObstacles;
     private static String locationBadBots, locationObstacles;
     private static Tile[][] map;
+    private static Tile home, obstacles;
 
     Maze () {}
 
@@ -62,22 +63,33 @@ public class Maze {
             // as in Java JDK 8, no need for input.close()
         } catch (IOException e) { e.printStackTrace(); }
 
+        // tokenize and initialize string containing ','
+        initmap();
+    }
+
+    public static void initmap() {
+
         // init map
         map = new Tile[mapHeight][mapWidth];
-        for (int row = 0; row < mapHeight; row++) {
-            for (int col = 0; col < mapWidth; col++) {
+        for (int row=0; row < mapHeight; row++) {
+            for (int col=0; col < mapWidth; col++) {
+                // System.out.println(row + " " + col);
                 map[row][col] = new Tile();
+
+                /** The Location Coordinate
+                 * take note that instead of map(x,y), we do map(y,x)
+                 * because we need to go through the row first then col
+                 * */
             }
         }
+
+        // init goal / home
+        home = map[goal_y][goal_x];
+        home.setTileName("Home");
 
         // init player location
         goodBot = new Robot(start_x, start_y);
 
-        // tokenize and initialize string containing ','
-        tokenization();
-    }
-
-    public static void tokenization() {
         // tokenize BadBots
         StringTokenizer badBots_token = new StringTokenizer(locationBadBots, ",");
         for(int i=0; i < numBadBot; i++) {
@@ -85,6 +97,7 @@ public class Maze {
             int pointY = Integer.parseInt(badBots_token.nextToken());
             Robot badBot = new Robot(pointX, pointY);
             badBots.add(badBot);
+            //System.out.println(badBots.get(i).getX_coordinate() + " " + badBots.get(i).getY_coordinate());
         }
 
         // tokenize Obstacles
@@ -92,9 +105,15 @@ public class Maze {
         for (int i=0; i < numObstacles; i++) {
             int pointX = Integer.parseInt(obstacles_token.nextToken());
             int pointY = Integer.parseInt(obstacles_token.nextToken());
-            map[pointX][pointY].setIsWalkable(false);
+            // System.out.println(pointX + " " + pointY);
+            obstacles = map[pointY][pointX];
+            obstacles.setIsWalkable(false);
+            obstacles.setHasObject(true);
+            obstacles.setTileName("Obstacles");
+            // System.out.println(obstacles.hasObject());
         }
     }
+
     /** Main class here **/
     public static void main(String[] args) throws IOException {
         Robot RobotTest = new Robot(2,1);
@@ -102,6 +121,10 @@ public class Maze {
         readfile();
 
         System.out.println("-------------TEST------------------");
+
+        System.out.println("Tile: " + map[0][19].getTileName());
+        System.out.println("Tile: " + map[3][2].getTileName());
+        System.out.println("Tile: " + map[0][0].getTileName());
 
         System.out.println("Hello I am RobotTest");
         System.out.println("My x coordinate is " + RobotTest.getX_coordinate());

@@ -8,10 +8,12 @@ public class Tile {
 
     private boolean isWalkable;
     private boolean hasObject;
+    private String tileName;
 
     Tile () {
         isWalkable = true;
         hasObject = false;
+        tileName = "Empty Lot";
     }
 
     /** Tile Checks
@@ -21,9 +23,14 @@ public class Tile {
      * check if Tile isFree
      * */
 
+
+    public void setTileName(String tileName) { this.tileName = tileName; }
+
     public void setIsWalkable(boolean isWalkable) { this.isWalkable = isWalkable; }
 
     public void setHasObject(boolean hasObject) { this.hasObject = hasObject; }
+
+    public String getTileName() { return tileName; }
 
     public boolean isWalkable() { return isWalkable; }
 
