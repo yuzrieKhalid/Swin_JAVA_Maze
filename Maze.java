@@ -121,12 +121,16 @@ public class Maze {
 
     // Accessor functions
 
-    public static Robot getGoodBot() { return goodBot; }
 
+    public static Tile[][] getMap() { return map; }
+    public static int getMapWidth() { return mapWidth; }
+    public static int getMapHeight() { return mapHeight; }
+    public static int getGoal_x() { return goal_x; }
+    public static int getGoal_y() { return goal_y; }
+    public static Robot getGoodBot() { return goodBot; }
     public static ArrayList<Robot> getBadBots() { return badBots; }
 
     public static void setGoodBot(Robot goodBot) { Maze.goodBot = goodBot; }
-
     public static void setBadBots(ArrayList<Robot> badBots) { Maze.badBots = badBots; }
 
     /** Main class here **/
