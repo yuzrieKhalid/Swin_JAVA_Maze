@@ -30,13 +30,15 @@ public class Maze {
     private static ArrayList<Robot> badBots = new ArrayList<Robot>();
     private static Robot goodBot;
 
-    // from file declaration
+    // knows the location of each object
     private static int mapWidth, mapHeight;
     private static int start_x, start_y, goal_x, goal_y;
     private static int numBadBot, numObstacles;
     private static String locationBadBots, locationObstacles;
-    private static Tile[][] map;
     private static Tile home, obstacles;
+
+    // knows the map of maze
+    private static Tile[][] map;
 
     Maze () {
         readfile();
