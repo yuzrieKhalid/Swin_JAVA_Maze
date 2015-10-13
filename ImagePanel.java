@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 /**
  * Created by yuzrie on 10/12/15.
- * Class Type
+ * Class Type: JPanel
+ * This is a class derived from JPanel where it will show
+ * the image/map of the maze.
  */
 public class ImagePanel extends JPanel {
 
@@ -14,17 +16,20 @@ public class ImagePanel extends JPanel {
     private Maze maze;
 
     // the images need to get from lecturer
-    Image goodBotImage = Toolkit.getDefaultToolkit().getImage(Maze.class.getResource("..."));
-    Image badBotImage = Toolkit.getDefaultToolkit().getImage(Maze.class.getResource("..."));
-    Image homeImage = Toolkit.getDefaultToolkit().getImage(Maze.class.getResource("..."));
-    Image emptySpotImage = Toolkit.getDefaultToolkit().getImage(Maze.class.getResource("..."));
-    Image obstacleImage = Toolkit.getDefaultToolkit().getImage(Maze.class.getResource("..."));
+    Image goodBotImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/goodbot.png");
+    Image badBotImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/badbot.png");
+    Image homeImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/home.png");
+    Image emptySpotImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/grass.png");
+    Image obstacleImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/obstacle.png");
 
     ImagePanel(Maze maze) {
-        this.maze = maze;
+        this.maze = maze;   // initialize the map
+        // sets program preferred screen size
+        this.setPreferredSize(new Dimension(maze.getMapWidth(), maze.getMapHeight()));
     }
 
-    public void drawMaze(Graphics graphics) {
+    @Override
+    public void paintComponent(Graphics graphics) {
         // draw maze onto a JPanel
         super.paintComponent(graphics);
 

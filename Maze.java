@@ -39,6 +39,7 @@ public class Maze {
 
     // knows the map of maze
     private static Tile[][] map;
+    private MazeGUI gui;
 
     Maze () {
         readfile();
@@ -47,6 +48,8 @@ public class Maze {
         System.out.println("Test coordinate: " + map[3][2].getTileName());
         System.out.println("Test coordinate: " + map[0][19].getTileName());
         System.out.println("Test coordinate: " + map[0][0].getTileName());
+
+        gui = new MazeGUI(this);
     }
 
     // This file reading technique is very static
