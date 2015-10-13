@@ -25,11 +25,11 @@ public class ImagePanel extends JPanel {
     ImagePanel(Maze maze) {
         this.maze = maze;   // initialize the map
         // sets program preferred screen size
-        this.setPreferredSize(new Dimension(maze.getMapWidth(), maze.getMapHeight()));
+        this.setPreferredSize(new Dimension(maze.getMapWidth()*60, maze.getMapHeight()*60));
     }
 
     @Override
-    public void paintComponent(Graphics graphics) {
+    public void paintComponents(Graphics graphics) {
         // draw maze onto a JPanel
         super.paintComponent(graphics);
 
@@ -38,9 +38,9 @@ public class ImagePanel extends JPanel {
         for (int row = 0; row < maze.getMapWidth(); row++) {
             for (int col = 0; col < maze.getMapHeight(); col++) {
                 if (map[row][col].isWalkable())
-                    graphics.drawImage(emptySpotImage, row, col, this);
+                    graphics.drawImage(emptySpotImage, row*60, col*60, this);
                 else
-                    graphics.drawImage(obstacleImage, row, col, this);
+                    graphics.drawImage(obstacleImage, row*60, col*60, this);
             }
          }
 
@@ -50,10 +50,10 @@ public class ImagePanel extends JPanel {
         // get and draw bad bots start position
         ArrayList<Robot> badBots = maze.getBadBots();
         for (Robot badBot : badBots) {
-            graphics.drawImage(badBotImage, badBot.getX_coordinate(), badBot.getY_coordinate(), this);
+            graphics.drawImage(badBotImage, badBot.getX_coordinate()*60, badBot.getY_coordinate()*60, this);
         }
 
         // get and draw good bot start position
-        graphics.drawImage(goodBotImage, maze.getGoodBot().getX_coordinate(), maze.getGoodBot().getY_coordinate(), this);
+        graphics.drawImage(goodBotImage, maze.getGoodBot().getX_coordinate()*60, maze.getGoodBot().getY_coordinate()*60, this);
     }
 }
