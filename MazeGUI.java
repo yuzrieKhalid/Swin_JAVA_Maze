@@ -72,17 +72,17 @@ public class MazeGUI extends JFrame {
 
         // put each panel into contentPane
         contentPane.add(westPanel, BorderLayout.WEST);
-        contentPane.add(centerPanel, BorderLayout.CENTER);
+        contentPane.add(centerPanel, BorderLayout.EAST);
 
+        updateImagePanel();
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.pack();
-        this.setLocationRelativeTo(null);
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        this.pack();
     }
 
     public void updateImagePanel() {
-        super.repaint();
+        imagePanel.repaint();
     }
 }

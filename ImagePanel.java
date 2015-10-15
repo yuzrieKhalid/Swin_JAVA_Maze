@@ -14,6 +14,9 @@ public class ImagePanel extends JPanel {
 
     // knows the condition of maze
     private Maze maze;
+    Tile[][] map = maze.getMap();
+
+    private static int TILE_DIMENS = 30;
 
     // the images need to get from lecturer
     Image goodBotImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/goodbot.png");
@@ -24,36 +27,37 @@ public class ImagePanel extends JPanel {
 
     ImagePanel(Maze maze) {
         this.maze = maze;   // initialize the map
-        // sets program preferred screen size
-        this.setPreferredSize(new Dimension(maze.getMapWidth()*60, maze.getMapHeight()*60));
+        // sets image panel preferred screen size
+        this.setPreferredSize(new Dimension(Maze.getMapWidth()*TILE_DIMENS, Maze.getMapHeight()*TILE_DIMENS));
     }
 
     @Override
-    public void paintComponents(Graphics graphics) {
+    public void paintComponent(Graphics graphics) {
         // draw maze onto a JPanel
         super.paintComponent(graphics);
 
-        // get and draw map from maze
-        Tile[][] map = maze.getMap();
-        for (int row = 0; row < maze.getMapWidth(); row++) {
-            for (int col = 0; col < maze.getMapHeight(); col++) {
-                if (map[row][col].isWalkable())
-                    graphics.drawImage(emptySpotImage, row*60, col*60, this);
+        // paint the empty spot and obstacles
+        for (int row = 0; row < Maze.getMapWidth(); row++) {
+            for (int col = 0; col < Maze.getMapHeight(); col++) {
+                if (map[col][row].isWalkable())
+                    graphics.drawImage(emptySpotImage, row*TILE_DIMENS, col*TILE_DIMENS, this);
                 else
-                    graphics.drawImage(obstacleImage, row*60, col*60, this);
+                    graphics.drawImage(obstacleImage, row*TILE_DIMENS, col*TILE_DIMENS, this);
             }
-         }
+        }
 
-        // get and draw home
-        graphics.drawImage(homeImage, maze.getGoal_x(), maze.getGoal_y(), this);
+        // paint home
+        graphics.drawImage(homeImage, maze.getGoal_x()*TILE_DIMENS, maze.getGoal_y()*TILE_DIMENS, this);
 
         // get and draw bad bots start position
         ArrayList<Robot> badBots = maze.getBadBots();
         for (Robot badBot : badBots) {
-            graphics.drawImage(badBotImage, badBot.getX_coordinate()*60, badBot.getY_coordinate()*60, this);
+            graphics.drawImage(badBotImage, badBot.getX_coordinate()*TILE_DIMENS, badBot.getY_coordinate()*TILE_DIMENS, this);
         }
 
         // get and draw good bot start position
-        graphics.drawImage(goodBotImage, maze.getGoodBot().getX_coordinate()*60, maze.getGoodBot().getY_coordinate()*60, this);
+        graphics.drawImage(goodBotImage, maze.getGoodBot().getX_coordinate()*TILE_DIMENS,
+                maze.getGoodBot().getY_coordinate()*TILE_DIMENS, this);
+
     }
 }
