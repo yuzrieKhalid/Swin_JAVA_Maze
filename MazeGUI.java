@@ -2,6 +2,8 @@ package yuzrie.javamaze;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by yuzrie on 10/13/15.
@@ -27,12 +29,72 @@ public class MazeGUI extends JFrame {
         directionHolder.setLayout(new GridLayout(3,3));
         resetUndoHolder.setLayout(new GridLayout(4,2));
 
-        // create directional buttons
+        // create directional buttons and its function
         JButton directionUp = new JButton("^");
+        directionUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Maze.getGoodBot().moveUP(Maze.getMap());
+
+                if (Maze.getGoodBot().outOfBound || Maze.getGoodBot().hasObstacle) {
+                    Maze.setEndturn(true); // will be false after badbots done moving
+                }
+                else
+                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate()+ ", "
+                        + Maze.getGoodBot().getY_coordinate()+ ")");
+                imagePanel.repaint();
+            }
+        });
         JButton directionLeft = new JButton("<");
+        directionLeft.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Maze.getGoodBot().moveLEFT(Maze.getMap());
+                if (Maze.getGoodBot().outOfBound || Maze.getGoodBot().hasObstacle) {
+                    Maze.setEndturn(true); // will be false after badbots done moving
+                }
+                else
+                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate()+ ", "
+                            + Maze.getGoodBot().getY_coordinate()+ ")");
+                imagePanel.repaint();
+            }
+        });
         JButton directionRight = new JButton(">");
+        directionRight.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Maze.getGoodBot().moveRIGHT(Maze.getMap());
+                if (Maze.getGoodBot().outOfBound || Maze.getGoodBot().hasObstacle) {
+                    Maze.setEndturn(true); // will be false after badbots done moving
+                }
+                else
+                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate()+ ", "
+                            + Maze.getGoodBot().getY_coordinate()+ ")");
+                imagePanel.repaint();
+            }
+        });
         JButton directionDown = new JButton("v");
+        directionDown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Maze.getGoodBot().moveDOWN(Maze.getMap());
+                if (Maze.getGoodBot().outOfBound || Maze.getGoodBot().hasObstacle) {
+                    Maze.setEndturn(true); // will be false after badbots done moving
+                }
+                else
+                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate()+ ", "
+                            + Maze.getGoodBot().getY_coordinate()+ ")");
+                imagePanel.repaint();
+            }
+        });
         JButton directionStay = new JButton("Stay");
+        directionStay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Maze.setEndturn(true);
+                imagePanel.repaint();
+            }
+        });
 
         // add directional buttons to its panel
         directionHolder.add(new JPanel());  // Grid [1][1]
@@ -49,7 +111,16 @@ public class MazeGUI extends JFrame {
         for (int i = 0; i < 4; i++)
             resetUndoHolder.add(new JPanel());
         JButton resetButton = new JButton("Reset");
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Maze.initMap();
+                System.out.println("Game Reset");
+                imagePanel.repaint();
+            }
+        });
         JButton undoButton = new JButton("Undo");
+        // TODO add a delete latest movement from the previous movement list
 
         // add reset and undo button to its panel
         resetUndoHolder.add(resetButton);
@@ -74,15 +145,10 @@ public class MazeGUI extends JFrame {
         contentPane.add(westPanel, BorderLayout.WEST);
         contentPane.add(centerPanel, BorderLayout.EAST);
 
-        updateImagePanel();
-
         this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         this.pack();
-    }
-
-    public void updateImagePanel() {
-        imagePanel.repaint();
     }
 }

@@ -8,9 +8,8 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
- * Created by yuzrie on 10/7/15.
  * Class Type: Main Class
- *
+ * @author yuzrie
  */
 public class Maze {
 
@@ -30,6 +29,9 @@ public class Maze {
     private static ArrayList<Robot> badBots = new ArrayList<Robot>();
     private static Robot goodBot;
 
+    // end turn to let bad bots move
+    private static boolean endturn = false;
+
     // knows the location of each object
     private static int mapWidth, mapHeight;
     private static int start_x, start_y, goal_x, goal_y;
@@ -39,6 +41,7 @@ public class Maze {
 
     // knows the map of maze
     private static Tile[][] map;
+    private ImagePanel imagePanel = new ImagePanel(this);
     private MazeGUI gui;
 
     Maze () {
@@ -48,7 +51,14 @@ public class Maze {
         System.out.println("Test coordinate: " + map[3][2].getTileName());
         System.out.println("Test coordinate: " + map[0][19].getTileName());
         System.out.println("Test coordinate: " + map[0][0].getTileName());
+        System.out.println("Goodbot position: (" + goodBot.getX_coordinate()+ ", "
+                + goodBot.getY_coordinate()+ ")");
+        System.out.println("Badbot position: (" + badBots.get(0).getX_coordinate()+ ", "
+                + badBots.get(0).getY_coordinate()+ ")");
+        System.out.println("Badbot position: (" + badBots.get(1).getX_coordinate()+ ", "
+                + badBots.get(1).getY_coordinate()+ ")");
 
+        // execute GUI
         gui = new MazeGUI(this);
     }
 
@@ -118,15 +128,19 @@ public class Maze {
             // System.out.println(pointX + " " + pointY);
             obstacles = map[pointY][pointX];
             obstacles.setIsWalkable(false);
-            obstacles.setHasObject(true);
+            obstacles.setHasObstacle(true);
             obstacles.setTileName("Obstacles");
             // System.out.println(obstacles.hasObject());
         }
     }
 
+    // Bad Bots AI movements
+    public void moveAI() {
+
+    }
+
+
     // Accessor functions
-
-
     public static Tile[][] getMap() { return map; }
     public static int getMapWidth() { return mapWidth; }
     public static int getMapHeight() { return mapHeight; }
@@ -134,11 +148,10 @@ public class Maze {
     public static int getGoal_y() { return goal_y; }
     public static Robot getGoodBot() { return goodBot; }
     public static ArrayList<Robot> getBadBots() { return badBots; }
+    public static boolean isEndturn() { return endturn; }
+    public static void setEndturn(boolean endturn) { Maze.endturn = endturn; }
 
-    public static void setGoodBot(Robot goodBot) { Maze.goodBot = goodBot; }
-    public static void setBadBots(ArrayList<Robot> badBots) { Maze.badBots = badBots; }
-
-    /** Main class here **/
+    /** public static void main **/
     public static void main(String[] args) {
         Maze maze = new Maze();
     }

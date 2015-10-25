@@ -7,18 +7,18 @@ package yuzrie.javamaze;
 public class Tile {
 
     private boolean isWalkable;
-    private boolean hasObject;
+    private boolean hasObstacle;
     private String tileName;
 
     Tile () {
         isWalkable = true;
-        hasObject = false;
+        hasObstacle = false;
         tileName = "Empty Lot";
     }
 
     /** Tile Checks
      * get and set isWalkable status
-     * get and set hasObject status
+     * get and set hasObstacle status
      * can freeTile from an object
      * check if Tile isFree
      * */
@@ -28,18 +28,12 @@ public class Tile {
 
     public void setIsWalkable(boolean isWalkable) { this.isWalkable = isWalkable; }
 
-    public void setHasObject(boolean hasObject) { this.hasObject = hasObject; }
+    public void setHasObstacle(boolean hasObstacle) { this.hasObstacle = hasObstacle; }
 
     public String getTileName() { return tileName; }
 
     public boolean isWalkable() { return isWalkable; }
 
-    public boolean hasObject() { return hasObject; }
+    public boolean hasObstacle() { return hasObstacle; }
 
-    public boolean isFree() { return (!hasObject && isWalkable); }
-
-    public void freeTile() {
-        isWalkable = true;
-        hasObject = false;
-    }
 }

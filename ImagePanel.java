@@ -14,11 +14,10 @@ public class ImagePanel extends JPanel {
 
     // knows the condition of maze
     private Maze maze;
-    Tile[][] map = maze.getMap();
+    Tile[][] map = Maze.getMap();
 
     private static int TILE_DIMENS = 30;
 
-    // the images need to get from lecturer
     Image goodBotImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/goodbot.png");
     Image badBotImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/badbot.png");
     Image homeImage = Toolkit.getDefaultToolkit().getImage("src/yuzrie/javamaze/home.png");
@@ -47,17 +46,16 @@ public class ImagePanel extends JPanel {
         }
 
         // paint home
-        graphics.drawImage(homeImage, maze.getGoal_x()*TILE_DIMENS, maze.getGoal_y()*TILE_DIMENS, this);
+        graphics.drawImage(homeImage, Maze.getGoal_x()*TILE_DIMENS, Maze.getGoal_y()*TILE_DIMENS, this);
 
         // get and draw bad bots start position
-        ArrayList<Robot> badBots = maze.getBadBots();
+        ArrayList<Robot> badBots = Maze.getBadBots();
         for (Robot badBot : badBots) {
             graphics.drawImage(badBotImage, badBot.getX_coordinate()*TILE_DIMENS, badBot.getY_coordinate()*TILE_DIMENS, this);
         }
 
         // get and draw good bot start position
-        graphics.drawImage(goodBotImage, maze.getGoodBot().getX_coordinate()*TILE_DIMENS,
-                maze.getGoodBot().getY_coordinate()*TILE_DIMENS, this);
-
+        graphics.drawImage(goodBotImage, Maze.getGoodBot().getX_coordinate()*TILE_DIMENS,
+                Maze.getGoodBot().getY_coordinate()*TILE_DIMENS, this);
     }
 }
