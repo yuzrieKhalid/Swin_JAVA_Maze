@@ -57,5 +57,12 @@ public class ImagePanel extends JPanel {
         // get and draw good bot start position
         graphics.drawImage(goodBotImage, Maze.getGoodBot().getX_coordinate()*TILE_DIMENS,
                 Maze.getGoodBot().getY_coordinate()*TILE_DIMENS, this);
+
+        if (Maze.isGameOver()) {
+            graphics.setColor(Color.DARK_GRAY);
+            graphics.fillRect(0, 0, 650, 450);
+            graphics.setColor(Color.WHITE);
+            graphics.drawString("Game Over", Maze.getMapWidth()*14, Maze.getMapHeight()*15);
+        }
     }
 }

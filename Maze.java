@@ -29,9 +29,6 @@ public class Maze {
     private static ArrayList<Robot> badBots = new ArrayList<Robot>();
     private static Robot goodBot;
 
-    // end turn to let bad bots move
-    private static boolean endturn = false;
-
     // knows the location of each object
     private static int mapWidth, mapHeight;
     private static int start_x, start_y, goal_x, goal_y;
@@ -43,6 +40,12 @@ public class Maze {
     private static Tile[][] map;
     private ImagePanel imagePanel = new ImagePanel(this);
     private MazeGUI gui;
+
+    // end turn to let bad bots move
+    private static boolean endTurn = false;
+
+    // get game over
+    private static boolean gameOver = false;
 
     Maze () {
         readfile();
@@ -57,7 +60,6 @@ public class Maze {
                 + badBots.get(0).getY_coordinate()+ ")");
         System.out.println("Badbot position: (" + badBots.get(1).getX_coordinate()+ ", "
                 + badBots.get(1).getY_coordinate()+ ")");
-
         // execute GUI
         gui = new MazeGUI(this);
     }
@@ -97,7 +99,7 @@ public class Maze {
                 // System.out.println(row + " " + col);
                 map[row][col] = new Tile();
                 /** The Location Coordinate
-                 * take note that instead of map(x,y), we do map(y,x)
+                 * take note that instead of map[x,y], we do map[y,x]
                  * because we need to go through the row first then col
                  * */
             }
@@ -135,8 +137,34 @@ public class Maze {
     }
 
     // Bad Bots AI movements
-    public void moveAI() {
-
+    public static void moveAI() {
+        // if player turn ended
+        if (isEndTurn()) {
+            // check for each badBot
+            for (int i = 0; i < 2; i++) {
+                // check which direction for bad bot 0 to go
+                if (goodBot.getY_coordinate() < badBots.get(i).getY_coordinate()) {
+                    badBots.get(i).moveUP(map);
+                    continue;
+                }
+                else if (goodBot.getX_coordinate() < badBots.get(i).getX_coordinate()) {
+                    badBots.get(i).moveLEFT(map);
+                    continue;
+                }
+                else if (goodBot.getY_coordinate() > badBots.get(i).getY_coordinate()) {
+                    badBots.get(i).moveDOWN(map);
+                    continue;
+                }
+                else if (goodBot.getX_coordinate() > badBots.get(i).getX_coordinate()) {
+                    badBots.get(i).moveRIGHT(map);
+                    continue;
+                }
+                else  if (goodBot.getX_coordinate() == badBots.get(i).getX_coordinate() && goodBot.getY_coordinate() == badBots.get(i).getY_coordinate()) {
+                    setGameOver(true);
+                }
+                setEndTurn(false);
+            }
+        }
     }
 
 
@@ -148,8 +176,10 @@ public class Maze {
     public static int getGoal_y() { return goal_y; }
     public static Robot getGoodBot() { return goodBot; }
     public static ArrayList<Robot> getBadBots() { return badBots; }
-    public static boolean isEndturn() { return endturn; }
-    public static void setEndturn(boolean endturn) { Maze.endturn = endturn; }
+    public static boolean isEndTurn() { return endTurn; }
+    public static void setEndTurn(boolean endTurn) { Maze.endTurn = endTurn; }
+    public static boolean isGameOver() { return gameOver; }
+    public static void setGameOver(boolean gameOver) { Maze.gameOver = gameOver; }
 
     /** public static void main **/
     public static void main(String[] args) {

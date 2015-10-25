@@ -37,11 +37,20 @@ public class MazeGUI extends JFrame {
                 Maze.getGoodBot().moveUP(Maze.getMap());
 
                 if (Maze.getGoodBot().outOfBound || Maze.getGoodBot().hasObstacle) {
-                    Maze.setEndturn(true); // will be false after badbots done moving
+                    Maze.setEndTurn(true); // will be false after badbots done moving
                 }
-                else
-                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate()+ ", "
-                        + Maze.getGoodBot().getY_coordinate()+ ")");
+                else {
+                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate() + ", "
+                            + Maze.getGoodBot().getY_coordinate() + ")");
+                }
+                Maze.setEndTurn(true);
+                Maze.moveAI();
+
+                // set game over
+                if (Maze.getGoodBot().getX_coordinate() == Maze.getGoal_x() && Maze.getGoodBot().getY_coordinate() == Maze.getGoal_y()) {
+                    System.out.println("Game Over");
+                    Maze.setGameOver(true);
+                }
                 imagePanel.repaint();
             }
         });
@@ -51,11 +60,21 @@ public class MazeGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Maze.getGoodBot().moveLEFT(Maze.getMap());
                 if (Maze.getGoodBot().outOfBound || Maze.getGoodBot().hasObstacle) {
-                    Maze.setEndturn(true); // will be false after badbots done moving
+                    Maze.setEndTurn(true); // will be false after badbots done moving
                 }
-                else
-                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate()+ ", "
-                            + Maze.getGoodBot().getY_coordinate()+ ")");
+                else {
+                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate() + ", "
+                            + Maze.getGoodBot().getY_coordinate() + ")");
+
+                }
+                Maze.setEndTurn(true);
+                Maze.moveAI();
+
+                // set game over
+                if (Maze.getGoodBot().getX_coordinate() == Maze.getGoal_x() && Maze.getGoodBot().getY_coordinate() == Maze.getGoal_y()) {
+                    System.out.println("Game Over");
+                    Maze.setGameOver(true);
+                }
                 imagePanel.repaint();
             }
         });
@@ -65,11 +84,20 @@ public class MazeGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Maze.getGoodBot().moveRIGHT(Maze.getMap());
                 if (Maze.getGoodBot().outOfBound || Maze.getGoodBot().hasObstacle) {
-                    Maze.setEndturn(true); // will be false after badbots done moving
+                    Maze.setEndTurn(true); // will be false after badbots done moving
                 }
-                else
-                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate()+ ", "
-                            + Maze.getGoodBot().getY_coordinate()+ ")");
+                else {
+                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate() + ", "
+                            + Maze.getGoodBot().getY_coordinate() + ")");
+                }
+                Maze.setEndTurn(true);
+                Maze.moveAI();
+
+                // set game over
+                if (Maze.getGoodBot().getX_coordinate() == Maze.getGoal_x() && Maze.getGoodBot().getY_coordinate() == Maze.getGoal_y()) {
+                    System.out.println("Game Over");
+                    Maze.setGameOver(true);
+                }
                 imagePanel.repaint();
             }
         });
@@ -79,11 +107,20 @@ public class MazeGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Maze.getGoodBot().moveDOWN(Maze.getMap());
                 if (Maze.getGoodBot().outOfBound || Maze.getGoodBot().hasObstacle) {
-                    Maze.setEndturn(true); // will be false after badbots done moving
+                    Maze.setEndTurn(true); // will be false after badbots done moving
                 }
-                else
-                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate()+ ", "
-                            + Maze.getGoodBot().getY_coordinate()+ ")");
+                else {
+                    System.out.println("Goodbot position: (" + Maze.getGoodBot().getX_coordinate() + ", "
+                            + Maze.getGoodBot().getY_coordinate() + ")");
+                }
+                Maze.setEndTurn(true);
+                Maze.moveAI();
+
+                // set game over
+                if (Maze.getGoodBot().getX_coordinate() == Maze.getGoal_x() && Maze.getGoodBot().getY_coordinate() == Maze.getGoal_y()) {
+                    System.out.println("Game Over");
+                    Maze.setGameOver(true);
+                }
                 imagePanel.repaint();
             }
         });
@@ -91,7 +128,8 @@ public class MazeGUI extends JFrame {
         directionStay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Maze.setEndturn(true);
+                Maze.setEndTurn(true);
+                Maze.moveAI();
                 imagePanel.repaint();
             }
         });
@@ -114,8 +152,8 @@ public class MazeGUI extends JFrame {
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Maze.setGameOver(false);
                 Maze.initMap();
-                System.out.println("Game Reset");
                 imagePanel.repaint();
             }
         });
